@@ -1,0 +1,26 @@
+[project]
+name = "favorites-hub-api"
+version = "0.1.0"
+description = "Favorites Hub 的账号、额度与 AI 能力后端"
+readme = "README.md"
+requires-python = ">=3.11"
+dependencies = [
+    "alembic>=1.16,<2",
+    "email-validator>=2,<3",
+    "fastapi>=0.115,<1",
+    "langchain-openai>=1.5,<2",
+    "psycopg[binary]>=3.2,<4",
+    "sqlalchemy>=2.0,<3",
+    "uvicorn>=0.34,<1",
+]
+
+[dependency-groups]
+dev = [
+    "httpx>=0.28,<1",
+    "pytest>=8,<9",
+]
+
+[tool.pytest.ini_options]
+addopts = "-q"
+pythonpath = ["."]
+testpaths = ["tests"]

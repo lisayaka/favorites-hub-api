@@ -1,0 +1,135 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="color-scheme" content="light">
+    <title>收藏汇 · 账户管理</title>
+    <link rel="stylesheet" href="/static/admin.css">
+    <script src="/static/admin.js" defer></script>
+  </head>
+  <body>
+    <header class="topbar">
+      <div class="brand">
+        <span class="brand-mark" aria-hidden="true">汇</span>
+        <div>
+          <strong>收藏汇</strong>
+          <span>账户管理台</span>
+        </div>
+      </div>
+      <span class="environment"><i aria-hidden="true"></i>本地管理</span>
+    </header>
+
+    <main class="shell">
+      <section class="hero" aria-labelledby="page-title">
+        <div>
+          <p class="eyebrow">Favorites Hub API</p>
+          <h1 id="page-title">管理试用账户</h1>
+          <p>创建邮箱账户、签发应用 Token，并查看状态与额度。</p>
+        </div>
+        <form id="key-form" class="key-form">
+          <label for="admin-key">管理员密钥</label>
+          <div class="key-row">
+            <input
+              id="admin-key"
+              name="admin-key"
+              type="password"
+              autocomplete="off"
+              placeholder="输入 ADMIN_API_KEY"
+              required
+            >
+            <button type="submit" class="button button-dark">连接</button>
+          </div>
+          <small>仅保存在当前标签页，关闭后自动清除。</small>
+        </form>
+      </section>
+
+      <section id="token-panel" class="token-panel" hidden aria-labelledby="token-title">
+        <div>
+          <span class="success-mark" aria-hidden="true">✓</span>
+          <div>
+            <h2 id="token-title">账户创建成功</h2>
+            <p>应用 Token 只显示这一次，请立即保存。</p>
+          </div>
+        </div>
+        <div class="token-row">
+          <input id="token-value" aria-label="新应用 Token" readonly>
+          <button id="copy-token" type="button" class="button button-light">复制 Token</button>
+          <button id="close-token" type="button" class="icon-button" aria-label="关闭 Token 提示">×</button>
+        </div>
+      </section>
+
+      <div class="workspace">
+        <section class="panel create-panel" aria-labelledby="create-title">
+          <div class="panel-heading">
+            <div>
+              <p class="section-number">01</p>
+              <h2 id="create-title">创建账户</h2>
+            </div>
+            <span class="chip">自动签发 Token</span>
+          </div>
+
+          <form id="create-form" class="create-form">
+            <label>
+              <span>邮箱地址</span>
+              <input name="email" type="email" autocomplete="email" placeholder="name@example.com" required>
+            </label>
+            <div class="form-grid">
+              <label>
+                <span>Token 类型</span>
+                <select name="token_type">
+                  <option value="trial">试用 trial</option>
+                  <option value="live">正式 live</option>
+                </select>
+              </label>
+              <label>
+                <span>有效天数</span>
+                <input name="expires_in_days" type="number" min="1" max="3650" value="7" required>
+              </label>
+              <label>
+                <span>总额度</span>
+                <input name="total_quota" type="number" min="1" value="100" required>
+              </label>
+            </div>
+            <button id="create-button" type="submit" class="button button-primary">创建并签发 Token</button>
+          </form>
+        </section>
+
+        <section class="panel accounts-panel" aria-labelledby="accounts-title">
+          <div class="panel-heading accounts-heading">
+            <div>
+              <p class="section-number">02</p>
+              <h2 id="accounts-title">账户列表</h2>
+            </div>
+            <div class="list-actions">
+              <span id="account-summary" class="summary">尚未加载</span>
+              <button id="refresh-accounts" type="button" class="button button-light">刷新</button>
+            </div>
+          </div>
+
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>账户</th>
+                  <th>状态</th>
+                  <th>Token</th>
+                  <th>额度</th>
+                  <th>有效期</th>
+                  <th><span class="sr-only">操作</span></th>
+                </tr>
+              </thead>
+              <tbody id="accounts-body"></tbody>
+            </table>
+            <div id="empty-state" class="empty-state">
+              <strong>输入管理员密钥后加载账户</strong>
+              <span>这里会显示账户状态、额度和有效期。</span>
+            </div>
+          </div>
+        </section>
+      </div>
+    </main>
+
+    <div id="toast" class="toast" role="status" aria-live="polite" hidden></div>
+  </body>
+</html>
